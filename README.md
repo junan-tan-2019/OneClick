@@ -1,5 +1,14 @@
 # Team 5 One Click
+Group Project for CS302 IT Solution Lifecycle Management.
 
+A local version of the OneClick Application (Previously placed in Gitlab based on project requirements).
+
+Application created by:
+- Jun An (Github username: junan-tan-2019)
+- Derrick Lim (Github username: derrick-lim-2019)
+- Keah Keat Tan (Github username: kk-tan-2019)
+- Jolene Loh
+- See Kexin
 
 ### Run the microservices with this command
 ```

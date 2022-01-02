@@ -14,7 +14,7 @@ Application created by:
 ```
 docker compose up -d --build
 ```
-#### Note: In the docker compose yml file, under service 1 there's a command `command : ["./wait-for-it.sh", "-t", "20", "mysql:3306", "--", "node", "app.js"]` to wait for every 20 secs to check if mysql is ready before starting the service 1 container. If you think the docker-compose process is too slow you can change the time (in secs) to no less than 10 secs. This wait-for-it.sh is added to start off service 1 after mysql database is ready for connection. (Due to issues with the service 1 having faster start up than mysql container, we modify the service 1 docker file with the added .sh file. These modifications are not push to gitlab as it is not necessary.)
+Note: In the docker compose yml file, under service 1 there's a command `command : ["./wait-for-it.sh", "-t", "20", "mysql:3306", "--", "node", "app.js"]` to wait for every 20 secs to check if mysql is ready before starting the service 1 container. If you think the docker-compose process is too slow you can change the time (in secs) to no less than 10 secs. This wait-for-it.sh is added to start off service 1 after mysql database is ready for connection. (Due to issues with the service 1 having faster start up than mysql container, we modify the service 1 docker file with the added .sh file. These modifications are not push to gitlab as it is not necessary.)
 
 <br>
 

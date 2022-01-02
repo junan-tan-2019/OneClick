@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+
+    <link rel="stylesheet" href="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7.3/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7.3/leaflet.js"></script>
+    <style>
+        #map {
+            width: 900px;
+            height: 500px;
+            margin: auto;
+        }
+
+        #title {
+            text-align: center;
+        }
+
+        #title2{
+            text-align: center;
+        }
+
+        #loading{
+            text-align: center;
+        }
+
+        #table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 id="title"> Select a location to collect mask</h2>
+    <div id="map"></div>
+    <div id="table-container" class="container">
+        <table id="table" class="table table-striped center" border='1'>
+            <thead class='thead-dark'>
+                <tr>
+                    <th>Location</th>
+                    <th>Stocks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in stocks_list %}
+                <tr>
+                    <td>{{data.location}}</td>
+                    <td>{{data.stock}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <form action="{{service1_link}}" method="get">
+            <button id="btn" type="submit"> Register </button>
+        </form>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        // initialize the map
+        var center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
+        var map = L.map('map').setView([center.x, center.y], 12);
+        L.Icon.Default.imagePath = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/images";
+
+        // load a tile layer
+        var basemap = L.tileLayer('https://maps-{s}.onemap.sg/v3/Original/{z}/{x}/{y}.png', {
+            detectRetina: true,
+            maxZoom: 18,
+            minZoom: 11
+        });
+
+        map.setMaxBounds([[1.56073, 104.1147], [1.16, 103.502]]);
+
+        basemap.addTo(map);
+
+        var slist = JSON.parse('{{stklist | tojson | safe}}');
+        var marker, content;
+        for(i = 0; i < 5; i++){
+            marker = L.marker([slist.data.stocks[i].longitude, slist.data.stocks[i].latitude], title).addTo(map);
+            content = slist.data.stocks[i].location + "'s stocks: " + slist.data.stocks[i].stock;
+            marker.bindPopup(content).openPopup();
+        }
+
+        document.getElementById("btn").onclick = function () {
+            location.href = "/register";
+        };
+    </script>
+</body>
+
+</html>

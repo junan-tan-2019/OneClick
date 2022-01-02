@@ -1,0 +1,10 @@
+service: lambda-deployment
+
+provider:
+ name: aws
+ endpointType: REGIONAL
+ runtime: python3.9
+
+functions:
+ lambda:
+   handler: src/app.lambda_handler
